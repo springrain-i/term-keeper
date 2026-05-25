@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-label="Project dictionary confirmation flow">
+  <rect width="1200" height="520" fill="#faf8f5"/>
+  <text x="70" y="70" fill="#1a1410" font-family="Microsoft YaHei, Arial, sans-serif" font-size="34" font-weight="700">确认后再写入：词典维护流程</text>
+  <text x="70" y="105" fill="#6d625b" font-family="Microsoft YaHei, Arial, sans-serif" font-size="18">用户定义优先，Agent 不把推断当成长期口径。</text>
+
+  <g font-family="Microsoft YaHei, Arial, sans-serif">
+    <rect x="70" y="170" width="220" height="130" rx="8" fill="#fffdfa" stroke="#e8e0d8" stroke-width="2"/>
+    <text x="95" y="215" fill="#c84b2f" font-size="16" font-weight="700">1. 用户提出定义</text>
+    <text x="95" y="248" fill="#3d3530" font-size="15">明确术语、边界、</text>
+    <text x="95" y="274" fill="#3d3530" font-size="15">废弃口径或角色职责。</text>
+
+    <path d="M310 235 L390 235" stroke="#1a1410" stroke-width="2" fill="none"/>
+    <path d="M390 235 L378 228 L378 242 Z" fill="#1a1410"/>
+
+    <rect x="410" y="150" width="280" height="170" rx="8" fill="#fffdfa" stroke="#e8e0d8" stroke-width="2"/>
+    <text x="435" y="195" fill="#2b5c8a" font-size="16" font-weight="700">2. Agent 输出确认表</text>
+    <text x="435" y="228" fill="#3d3530" font-size="15">类型、定义、来源、影响、</text>
+    <text x="435" y="254" fill="#3d3530" font-size="15">边界和动作先给用户审阅。</text>
+    <rect x="435" y="276" width="225" height="1" fill="#e8e0d8"/>
+    <text x="435" y="300" fill="#8a7f78" font-size="13">未确认前不写入词典。</text>
+
+    <path d="M710 235 L790 235" stroke="#1a1410" stroke-width="2" fill="none"/>
+    <path d="M790 235 L778 228 L778 242 Z" fill="#1a1410"/>
+
+    <rect x="810" y="170" width="320" height="130" rx="8" fill="#fffdfa" stroke="#e8e0d8" stroke-width="2"/>
+    <text x="835" y="215" fill="#2d7a4f" font-size="16" font-weight="700">3. 同步维护两份词典</text>
+    <text x="835" y="248" fill="#3d3530" font-size="15">Markdown 给 Agent 读，</text>
+    <text x="835" y="274" fill="#3d3530" font-size="15">HTML 表格给使用者审阅。</text>
+
+    <rect x="250" y="385" width="700" height="56" rx="6" fill="#f5f0ea" stroke="#e8e0d8"/>
+    <text x="280" y="420" fill="#6d625b" font-size="16">触发频率只做增量记录；当前运行状态、临时批次和 Agent 推断不会写成长期定义。</text>
+  </g>
+</svg>

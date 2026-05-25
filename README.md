@@ -83,7 +83,15 @@ The agent can also edit Markdown and HTML directly. The scripts are useful for t
 
 ## Demo
 
-Open:
+GitHub Pages display page:
+
+```text
+https://springrain-i.github.io/term-keeper/
+```
+
+The live page works after GitHub Pages is enabled for `main / docs`.
+
+Open the bundled HTML demo locally:
 
 ```text
 skill/term-keeper/examples/demo-glossary.html
@@ -91,12 +99,11 @@ skill/term-keeper/examples/demo-glossary.html
 
 It shows the expected table-first review experience with Chinese table headers, last modified date, trigger frequency, confirmation status, and deprecated meanings.
 
-Suggested screenshot path for GitHub:
+### Screenshots
 
-```text
-screenshots/demo-glossary-table.png
-screenshots/confirmation-table-flow.svg
-```
+![Term Keeper HTML glossary table](screenshots/demo-glossary-table.png)
+
+![Term Keeper confirmation workflow](screenshots/confirmation-table-flow.png)
 
 `demo-glossary-table.png` is captured from `examples/demo-glossary.html`. `confirmation-table-flow.svg` explains the confirmation-first workflow.
 

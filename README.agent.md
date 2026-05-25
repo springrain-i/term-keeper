@@ -20,6 +20,13 @@ Copy that directory into the Codex skills directory as:
 <codex-home>/skills/term-keeper/
 ```
 
+## Visual Demo Assets
+
+- GitHub README screenshots: `screenshots/demo-glossary-table.png`, `screenshots/confirmation-table-flow.png`
+- GitHub Pages source: `docs/index.html`
+- GitHub Pages HTML demo: `docs/demo-glossary.html`
+- Pages URL after enabling Pages: `https://springrain-i.github.io/term-keeper/`
+
 ## Default Dictionary Files
 
 If a project has no local dictionary config, use:

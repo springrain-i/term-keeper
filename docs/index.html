@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Term Keeper · Agent 词典管家</title>
+  <style>
+    :root {
+      --ink: #1a1410;
+      --muted: #6d625b;
+      --paper: #faf8f5;
+      --surface: #fffdfa;
+      --border: #e8e0d8;
+      --accent: #c84b2f;
+      --blue: #2b5c8a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 48px 20px 64px;
+    }
+
+    header {
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 22px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 820px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    a.button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 8px 14px;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      background: var(--surface);
+    }
+
+    a.button.primary {
+      background: var(--ink);
+      color: var(--surface);
+    }
+
+    section {
+      margin-top: 34px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    figure {
+      margin: 0;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    figcaption {
+      border-top: 1px solid var(--border);
+      padding: 10px 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .note {
+      border-left: 3px solid var(--accent);
+      background: #f5f0ea;
+      padding: 12px 14px;
+      color: var(--muted);
+    }
+
+    code {
+      background: #f5f0ea;
+      padding: 2px 5px;
+      border: 1px solid var(--border);
+    }
+
+    @media (max-width: 760px) {
+      main { padding: 32px 14px 48px; }
+      .grid { grid-template-columns: 1fr; }
+      .lead { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">Term Keeper</p>
+      <h1>Agent 词典管家</h1>
+      <p class="lead">防止 Agent 在上下文压缩、跨会话协作或多 Agent 分工中忘记、误解、漂移项目关键定义。Markdown 给 Agent 读，HTML 表格给人审阅，定义类写入先确认再维护。</p>
+      <div class="actions">
+        <a class="button primary" href="demo-glossary.html">打开 HTML 表格 Demo</a>
+        <a class="button" href="https://github.com/springrain-i/term-keeper">查看 GitHub 仓库</a>
+      </div>
+    </header>
+
+    <section>
+      <h2>展示图</h2>
+      <div class="grid">
+        <figure>
+          <img src="assets/demo-glossary-table.png" alt="Term Keeper HTML glossary table screenshot" />
+          <figcaption>HTML 表格审阅版：展示术语、定义、边界、最后修改、触发频率和确认状态。</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/confirmation-table-flow.png" alt="Term Keeper confirmation workflow screenshot" />
+          <figcaption>确认优先流程：用户定义 -> Agent 确认表 -> Markdown 与 HTML 同步维护。</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>适用场景</h2>
+      <p class="note">当你发现 Agent 压缩上下文后忘记定义、对术语理解和你不一致、或者把临时运行状态当成长期概念时，就需要一个项目级词典维护 skill。</p>
+    </section>
+
+    <section>
+      <h2>安装包位置</h2>
+      <p>可安装的 skill 包位于仓库的 <code>skill/term-keeper/</code>。复制到 Codex skills 目录后即可使用。</p>
+    </section>
+  </main>
+</body>
+</html>
