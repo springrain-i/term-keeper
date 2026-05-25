@@ -1,0 +1,7 @@
+interface:
+  display_name: "Agent 词典管家"
+  short_description: "维护项目术语表、概念口径、边界和废弃定义"
+  default_prompt: "Use $term-keeper to record or update this user-confirmed project term in the project glossary."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agent 词典管家 · 表格审阅版</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1410;
+      --ink-light: #3d3530;
+      --ink-muted: #8a7f78;
+      --accent: #c84b2f;
+      --accent-light: #fdf0ed;
+      --accent-2: #2b5c8a;
+      --accent-2-light: #edf3f9;
+      --accent-3: #2d7a4f;
+      --accent-3-light: #edf7f2;
+      --warn: #d4820a;
+      --warn-light: #fdf5e6;
+      --paper: #faf8f5;
+      --paper-warm: #f5f0ea;
+      --surface: #fffdfa;
+      --border: #e8e0d8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      line-height: 1.55;
+    }
+
+    .page {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 28px 24px 42px;
+    }
+
+    .doc-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", SimSun, serif;
+      font-size: 30px;
+      line-height: 1.25;
+      letter-spacing: 0;
+      color: var(--ink);
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      max-width: 760px;
+      color: var(--ink-muted);
+      font-size: 13px;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, auto);
+      gap: 14px;
+      align-items: end;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .summary-item {
+      min-width: 72px;
+      border-left: 2px solid var(--border);
+      padding-left: 10px;
+    }
+
+    .summary-item strong {
+      display: block;
+      color: var(--accent);
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .summary-item span {
+      display: block;
+      margin-top: 5px;
+      color: var(--ink-muted);
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .search input {
+      width: 100%;
+      height: 32px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      background: var(--paper);
+      padding: 0 10px;
+      color: var(--ink-light);
+      font: 12px "Noto Sans SC", sans-serif;
+      outline: none;
+    }
+
+    .search input:focus {
+      border-color: var(--accent);
+      background: var(--surface);
+    }
+
+    .filters {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .filter {
+      border: 0;
+      border-bottom: 2px solid transparent;
+      background: transparent;
+      padding: 6px 0 5px;
+      color: var(--ink-muted);
+      font: 500 10px "JetBrains Mono", monospace;
+      letter-spacing: .08em;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .filter.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .table-wrap {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      overflow: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1232px;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 12px;
+    }
+
+    col.term-col { width: 140px; }
+    col.type-col { width: 95px; }
+    col.definition-col { width: 225px; }
+    col.owner-col { width: 120px; }
+    col.rule-col { width: 155px; }
+    col.boundary-col { width: 235px; }
+    col.modified-col { width: 92px; }
+    col.frequency-col { width: 78px; }
+    col.status-col { width: 92px; }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: var(--paper-warm);
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      color: var(--ink-muted);
+      text-align: left;
+      font: 500 10px "JetBrains Mono", monospace;
+      letter-spacing: .08em;
+      white-space: nowrap;
+    }
+
+    thead th:last-child,
+    tbody td:last-child {
+      border-right: 0;
+    }
+
+    tbody td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      color: var(--ink-light);
+      vertical-align: top;
+      word-break: break-word;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    tbody tr:hover td {
+      background: var(--paper-warm);
+    }
+
+    .term {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .tag,
+    .frequency,
+    .status {
+      display: inline-block;
+      border-radius: 2px;
+      padding: 2px 7px;
+      font: 500 10px "JetBrains Mono", monospace;
+      white-space: nowrap;
+    }
+
+    .frequency {
+      min-width: 34px;
+      text-align: right;
+      background: var(--paper-warm);
+      color: var(--ink-light);
+      border: 1px solid var(--border);
+    }
+
+    .tag.term-tag {
+      background: var(--accent-2-light);
+      color: var(--accent-2);
+      border: 1px solid #d5e4f1;
+    }
+
+    .tag.agent-tag {
+      background: var(--accent-3-light);
+      color: var(--accent-3);
+      border: 1px solid #d2e8da;
+    }
+
+    .tag.report-tag {
+      background: var(--warn-light);
+      color: var(--warn);
+      border: 1px solid #efd7a8;
+    }
+
+    .tag.deprecated-tag {
+      background: var(--accent-light);
+      color: var(--accent);
+      border: 1px solid #f0c5bb;
+    }
+
+    .status.confirmed {
+      background: var(--accent-3-light);
+      color: var(--accent-3);
+      border: 1px solid #d2e8da;
+    }
+
+    .status.pending {
+      background: var(--warn-light);
+      color: var(--warn);
+      border: 1px solid #efd7a8;
+    }
+
+    .deprecated-word {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .footnote {
+      margin-top: 10px;
+      border-left: 3px solid var(--accent);
+      background: var(--paper-warm);
+      padding: 9px 12px;
+      color: var(--ink-muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        padding: 22px 14px 36px;
+      }
+
+      .doc-head {
+        display: block;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-top: 16px;
+      }
+
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .filters {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px 12px;
+      }
+
+      .filter {
+        border: 1px solid var(--border);
+        padding: 8px 6px;
+        background: var(--surface);
+      }
+
+      .filter.active {
+        background: var(--accent-light);
+        border-color: #efc9bf;
+      }
+
+      table {
+        min-width: 1080px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="doc-head">
+      <div>
+        <p class="eyebrow">Term Keeper · Review Snapshot</p>
+        <h1>Agent 词典管家</h1>
+        <p class="subtitle">表格用于审阅长期术语、角色边界、展示口径与废弃说法。写入前先确认定义，确认后同步 Markdown 与 HTML。</p>
+      </div>
+      <div class="summary" aria-label="summary">
+        <div class="summary-item">
+          <strong>6</strong>
+          <span>词条</span>
+        </div>
+        <div class="summary-item">
+          <strong>5</strong>
+          <span>已确认</span>
+        </div>
+        <div class="summary-item">
+          <strong>1</strong>
+          <span>待确认</span>
+        </div>
+        <div class="summary-item">
+          <strong>1</strong>
+          <span>已废弃</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="toolbar" aria-label="table controls">
+      <div class="search">
+        <input id="search" type="search" placeholder="搜索术语 / 定义 / 负责人" />
+      </div>
+      <div class="filters">
+        <button class="filter active" type="button" data-filter="all">全部</button>
+        <button class="filter" type="button" data-filter="confirmed">已确认</button>
+        <button class="filter" type="button" data-filter="pending">待确认</button>
+        <button class="filter" type="button" data-filter="deprecated">已废弃</button>
+      </div>
+    </section>
+
+    <section class="table-wrap" aria-label="glossary table">
+      <table>
+        <colgroup>
+          <col class="term-col" />
+          <col class="type-col" />
+          <col class="definition-col" />
+          <col class="owner-col" />
+          <col class="rule-col" />
+          <col class="boundary-col" />
+          <col class="status-col" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>术语</th>
+            <th>类型</th>
+            <th>定义</th>
+            <th>来源 / 负责人</th>
+            <th>维护规则</th>
+            <th>边界 / 废弃含义</th>
+            <th>最后修改</th>
+            <th>触发频率</th>
+            <th>确认状态</th>
+          </tr>
+        </thead>
+        <tbody id="rows">
+          <tr data-status="confirmed">
+            <td class="term">Fulfillment Window</td>
+            <td><span class="tag term-tag">TERM</span></td>
+            <td>订单承诺时间到实际签收时间之间的时间差，用于衡量履约体验。</td>
+            <td>Product owner</td>
+            <td>只有口径变化被用户确认后才更新。</td>
+            <td>不是某一次订单异常，也不是当前批次运行状态。</td>
+            <td>2026-05-25</td>
+            <td><span class="frequency">12</span></td>
+            <td><span class="status confirmed">已确认</span></td>
+          </tr>
+          <tr data-status="confirmed">
+            <td class="term">Agent Router</td>
+            <td><span class="tag agent-tag">AGENT</span></td>
+            <td>负责识别请求类型，并把任务转交给对应 Agent。</td>
+            <td>Workflow owner</td>
+            <td>职责变化必须先由使用者确认。</td>
+            <td>不是调度器，不决定下游执行优先级。</td>
+            <td>2026-05-25</td>
+            <td><span class="frequency">8</span></td>
+            <td><span class="status confirmed">已确认</span></td>
+          </tr>
+          <tr data-status="confirmed deprecated">
+            <td class="term">Quality Score</td>
+            <td><span class="tag report-tag">REPORT</span></td>
+            <td>用于展示项目质量状态的综合评分口径。</td>
+            <td>Analytics owner</td>
+            <td>展示口径和数据源变化必须同步更新。</td>
+            <td><span class="deprecated-word">Deprecated:</span> Old Score 不再作为正式展示名称。</td>
+            <td>2026-05-24</td>
+            <td><span class="frequency">5</span></td>
+            <td><span class="status confirmed">已确认</span></td>
+          </tr>
+          <tr data-status="confirmed">
+            <td class="term">Review HTML</td>
+            <td><span class="tag term-tag">MODULE</span></td>
+            <td>给使用者审阅词表的 HTML 表格版，和 Markdown 词表保持同步。</td>
+            <td>Dictionary maintainer</td>
+            <td>每次词表变更后同步生成或维护。</td>
+            <td>不是唯一真实来源；Markdown 仍是 Agent 友好的主维护入口。</td>
+            <td>2026-05-25</td>
+            <td><span class="frequency">4</span></td>
+            <td><span class="status confirmed">已确认</span></td>
+          </tr>
+          <tr data-status="pending">
+            <td class="term">Pipeline Handoff</td>
+            <td><span class="tag agent-tag">PIPELINE</span></td>
+            <td>一个节点完成后，把产物、状态和下一步输入交给后续节点的协议。</td>
+            <td>Engineering owner</td>
+            <td>影响流程顺序时必须先确认。</td>
+            <td>不是聊天口头通知，也不是临时备注。</td>
+            <td>2026-05-25</td>
+            <td><span class="frequency">3</span></td>
+            <td><span class="status pending">待确认</span></td>
+          </tr>
+          <tr data-status="confirmed deprecated">
+            <td class="term">Old Score</td>
+            <td><span class="tag deprecated-tag">DEPRECATED</span></td>
+            <td>早期质量评分名称，已被 Quality Score 替代。</td>
+            <td>Analytics owner</td>
+            <td>保留废弃说明，避免后续 Agent 误用。</td>
+            <td>不能作为新报表或新文档里的正式名称。</td>
+            <td>2026-05-24</td>
+            <td><span class="frequency">5</span></td>
+            <td><span class="status confirmed">已确认</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <p class="footnote">维护规则：先生成确认表，使用者确认后再写入 Markdown，并同步生成 HTML 表格审阅版。</p>
+  </div>
+
+  <script>
+    const search = document.querySelector("#search");
+    const filters = Array.from(document.querySelectorAll(".filter"));
+    const rows = Array.from(document.querySelectorAll("#rows tr"));
+    let activeFilter = "all";
+
+    function applyFilters() {
+      const query = search.value.trim().toLowerCase();
+      rows.forEach(function(row) {
+        const text = row.innerText.toLowerCase();
+        const status = row.dataset.status || "";
+        const matchesSearch = !query || text.indexOf(query) >= 0;
+        const matchesFilter = activeFilter === "all" || status.indexOf(activeFilter) >= 0;
+        row.style.display = matchesSearch && matchesFilter ? "" : "none";
+      });
+    }
+
+    search.addEventListener("input", applyFilters);
+    filters.forEach(function(button) {
+      button.addEventListener("click", function() {
+        filters.forEach(function(item) {
+          item.classList.remove("active");
+        });
+        button.classList.add("active");
+        activeFilter = button.dataset.filter;
+        applyFilters();
+      });
+    });
+  </script>
+</body>
+</html>
