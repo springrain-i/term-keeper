@@ -13,6 +13,12 @@
 
 `term-keeper` 的作用，就是给项目建立一层稳定的“词义记忆”：Markdown 给 Agent 读，HTML 表格给人审阅，所有定义类写入都必须先经过用户确认。
 
+## 效果预览
+
+![Term Keeper HTML 词表截图](screenshots/demo-glossary-table.png)
+
+![Term Keeper 确认流程图](screenshots/confirmation-table-flow.png)
+
 ## 它解决什么
 
 - 把长期概念从聊天上下文里沉淀到项目文件。
@@ -100,11 +106,7 @@ https://springrain-i.github.io/term-keeper/
 skill/term-keeper/examples/demo-glossary.html
 ```
 
-### 截图
-
-![Term Keeper HTML 词表截图](screenshots/demo-glossary-table.png)
-
-![Term Keeper 确认流程图](screenshots/confirmation-table-flow.png)
+截图已放在上方“效果预览”部分，GitHub 打开中文版 README 就能直接看到。
 
 ## 更多
 
