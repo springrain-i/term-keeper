@@ -20,7 +20,6 @@ Do you feel that an agent forgets key definitions after context compaction? Do d
 2. The agent drafts a confirmation table.
 3. The user confirms or corrects the wording.
 4. The agent updates both `docs/glossary.md` and `docs/glossary.html`.
-5. Optional scripts can render or check the files, but everyday maintenance is done by the agent.
 
 ## Best Fit
 
@@ -48,15 +47,13 @@ skill/term-keeper/
   scripts/check_dictionary_sync.py
 ```
 
-Release files such as this README, screenshots, and license stay outside `skill/term-keeper/`. This keeps the installable skill package focused and lightweight.
-
 ## Quick Start
 
 Install the skill into your Codex skills directory, then say something like:
 
 ```text
-Use term-keeper. Record this definition:
-In this project, "Agent Router" means the component that classifies requests and hands them off to the correct agent. It is not a scheduler.
+Please use term-keeper to record this project term:
+"Agent Router" means the component that classifies requests and hands them off to the correct agent. It is not a scheduler.
 ```
 
 The agent should first show a confirmation table. Only after you approve it should the glossary be updated.
@@ -78,8 +75,6 @@ The bundled Python scripts are optional:
 
 - `skill/term-keeper/scripts/render_glossary_html.py`: renders default Markdown entries into an HTML review table.
 - `skill/term-keeper/scripts/check_dictionary_sync.py`: checks whether Markdown and HTML have synchronized terms and selected metadata.
-
-The agent can also edit Markdown and HTML directly. The scripts are useful for tests, CI, release checks, or generated-output workflows.
 
 ## Demo
 
