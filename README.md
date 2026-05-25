@@ -2,6 +2,8 @@
 
 A reusable Codex skill for maintaining a project glossary/design dictionary.
 
+[中文说明](README.zh-CN.md) · [Agent-readable version](README.agent.md)
+
 Do you feel that an agent forgets key definitions after context compaction? Do different agents interpret the same term differently from you? Do module names, role boundaries, dashboard metrics, or pipeline terms keep drifting across conversations? This skill gives your project a durable vocabulary layer: Markdown for agents, HTML tables for human review, and confirmation gates before definitions are written.
 
 ## What It Solves
@@ -74,8 +76,8 @@ The Markdown file is the agent-friendly source. The HTML file is a table-first r
 
 The bundled Python scripts are optional:
 
-- `scripts/render_glossary_html.py`: renders default Markdown entries into an HTML review table.
-- `scripts/check_dictionary_sync.py`: checks whether Markdown and HTML have synchronized terms and selected metadata.
+- `skill/term-keeper/scripts/render_glossary_html.py`: renders default Markdown entries into an HTML review table.
+- `skill/term-keeper/scripts/check_dictionary_sync.py`: checks whether Markdown and HTML have synchronized terms and selected metadata.
 
 The agent can also edit Markdown and HTML directly. The scripts are useful for tests, CI, release checks, or generated-output workflows.
 
@@ -84,7 +86,7 @@ The agent can also edit Markdown and HTML directly. The scripts are useful for t
 Open:
 
 ```text
-examples/demo-glossary.html
+skill/term-keeper/examples/demo-glossary.html
 ```
 
 It shows the expected table-first review experience with Chinese table headers, last modified date, trigger frequency, confirmation status, and deprecated meanings.
@@ -103,3 +105,5 @@ screenshots/confirmation-table-flow.svg
 - See [INSTALLATION.md](INSTALLATION.md) for setup.
 - See [EXAMPLES.md](EXAMPLES.md) for practical prompts.
 - See [TESTING.md](TESTING.md) for minimal verification.
+- See [README.zh-CN.md](README.zh-CN.md) for Chinese documentation.
+- See [README.agent.md](README.agent.md) for agent-facing instructions.
